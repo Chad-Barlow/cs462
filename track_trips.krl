@@ -17,8 +17,11 @@ A first ruleset for the Quickstart
   }
   
   rule process_trip {
-    select when echo message input re#(.*)# setting(mileage);
-    send_directive("trip") with
+    select when echo message 
+    pre {
+      milage = event:attr("mileage"); //accessing event attributes
+    }
+    send_directive("trip") with //this is technically an action (in action block)
       trip_length = mileage
   }
 }
